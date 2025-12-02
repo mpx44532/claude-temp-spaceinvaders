@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: linear-gradient(to bottom, #000000, #0a0a2e);
+    color: #00ff00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.game-container {
+    text-align: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 3px solid #00ff00;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+}
+
+.header {
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00;
+    margin-bottom: 15px;
+    letter-spacing: 5px;
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-around;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.score, .lives {
+    padding: 10px 20px;
+    background: rgba(0, 255, 0, 0.1);
+    border: 2px solid #00ff00;
+    border-radius: 5px;
+}
+
+#gameCanvas {
+    display: block;
+    margin: 0 auto;
+    border: 2px solid #00ff00;
+    background: #000;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+}
+
+.controls {
+    margin-top: 20px;
+}
+
+.controls p {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    color: #00ff00;
+}
+
+button {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1em;
+    padding: 12px 30px;
+    margin: 5px;
+    background: #00ff00;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #00cc00;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.game-over {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    padding: 40px;
+    border: 3px solid #ff0000;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+.game-over h2 {
+    color: #ff0000;
+    font-size: 3em;
+    margin-bottom: 20px;
+    text-shadow: 0 0 15px #ff0000;
+}
+
+.game-over p {
+    color: #00ff00;
+    font-size: 1.5em;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .game-info {
+        font-size: 1em;
+    }
+
+    #gameCanvas {
+        max-width: 100%;
+        height: auto;
+    }
+}
