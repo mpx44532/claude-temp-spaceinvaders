@@ -118,14 +118,46 @@ function drawEnemies() {
 
 // Draw bullets
 function drawBullets() {
-    ctx.fillStyle = '#00ff00';
+    // Draw player bullets as violet snowballs
     playerBullets.forEach(bullet => {
-        ctx.fillRect(bullet.x, bullet.y, 3, 15);
+        // Outer glow
+        ctx.beginPath();
+        ctx.arc(bullet.x, bullet.y, 8, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(138, 43, 226, 0.3)';
+        ctx.fill();
+
+        // Middle layer
+        ctx.beginPath();
+        ctx.arc(bullet.x, bullet.y, 6, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(147, 112, 219, 0.7)';
+        ctx.fill();
+
+        // Core - violet
+        ctx.beginPath();
+        ctx.arc(bullet.x, bullet.y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#9370DB';
+        ctx.fill();
+
+        // Highlight for snowball effect
+        ctx.beginPath();
+        ctx.arc(bullet.x - 1, bullet.y - 1, 2, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(230, 230, 250, 0.8)';
+        ctx.fill();
     });
 
-    ctx.fillStyle = '#ff0000';
+    // Draw enemy bullets as red circles
     enemyBullets.forEach(bullet => {
-        ctx.fillRect(bullet.x, bullet.y, 3, 15);
+        // Outer glow
+        ctx.beginPath();
+        ctx.arc(bullet.x, bullet.y, 6, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 0, 0, 0.4)';
+        ctx.fill();
+
+        // Core
+        ctx.beginPath();
+        ctx.arc(bullet.x, bullet.y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#ff0000';
+        ctx.fill();
     });
 }
 
@@ -189,14 +221,16 @@ function updateEnemies() {
 
 // Collision detection
 function checkCollisions() {
+    const bulletRadius = 4;
+
     // Player bullets hit enemies
     playerBullets.forEach((bullet, bulletIndex) => {
         enemies.forEach(enemy => {
             if (enemy.alive &&
-                bullet.x > enemy.x &&
-                bullet.x < enemy.x + enemy.width &&
-                bullet.y > enemy.y &&
-                bullet.y < enemy.y + enemy.height) {
+                bullet.x + bulletRadius > enemy.x &&
+                bullet.x - bulletRadius < enemy.x + enemy.width &&
+                bullet.y + bulletRadius > enemy.y &&
+                bullet.y - bulletRadius < enemy.y + enemy.height) {
 
                 enemy.alive = false;
                 playerBullets.splice(bulletIndex, 1);
@@ -213,10 +247,10 @@ function checkCollisions() {
 
     // Enemy bullets hit player
     enemyBullets.forEach((bullet, bulletIndex) => {
-        if (bullet.x > player.x &&
-            bullet.x < player.x + player.width &&
-            bullet.y > player.y &&
-            bullet.y < player.y + player.height) {
+        if (bullet.x + bulletRadius > player.x &&
+            bullet.x - bulletRadius < player.x + player.width &&
+            bullet.y + bulletRadius > player.y &&
+            bullet.y - bulletRadius < player.y + player.height) {
 
             enemyBullets.splice(bulletIndex, 1);
             lives--;
