@@ -92,7 +92,7 @@ function drawEnemies() {
     enemies.forEach(enemy => {
         if (enemy.alive) {
             // Different colors for different rows
-            const colors = ['#00ff00', '#ffffff', '#ff0000', '#808080', '#0000ff'];
+            const colors = ['#9370DB', '#ffffff', '#ff0000', '#808080', '#0000ff'];
             ctx.fillStyle = colors[enemy.type];
 
             // Draw enemy body
