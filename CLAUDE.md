@@ -56,7 +56,7 @@ All game state is managed through global objects and arrays in `game.js`:
 ### Enemy Formation System
 
 Enemies are created in a 5x11 grid (55 total) with different colors per row (game.js:59-73):
-- Row 0 (top): Green
+- Row 0 (top): Violet (#9370DB)
 - Row 1: White
 - Row 2: Red
 - Row 3: Gray
@@ -76,10 +76,11 @@ Progressive difficulty is implemented through:
 
 ### Collision Detection
 
-Axis-aligned bounding box (AABB) collision (game.js:191-242):
-- Player bullets vs enemies
-- Enemy bullets vs player
+Circular bullet collision with radius-based detection (game.js:191-276):
+- Player bullets vs enemies (circular bullets with 4px radius)
+- Enemy bullets vs player (circular bullets with 4px radius)
 - Enemy position vs player baseline (instant game over)
+- Collision uses bullet center point with radius offset for accurate circular hit detection
 
 ### Canvas Rendering
 
@@ -88,7 +89,10 @@ Fixed canvas size: 800x600 pixels (game.js:4-5)
 Drawing techniques:
 - Player: Custom triangle path with cyan cockpit detail (game.js:76-88)
 - Enemies: Rectangles with white eyes and antenna strokes (game.js:91-117)
-- Bullets: Simple rectangles - green for player, red for enemies (game.js:120-130)
+- Bullets: Circular shapes with multi-layer rendering (game.js:120-162)
+  - Player bullets: Violet snowballs with 3-layer effect (outer glow, middle layer, core) plus white highlight
+  - Enemy bullets: Red circles with outer glow effect
+  - All bullets use canvas arc() for smooth circular rendering
 
 ## Game Constants
 
