@@ -16,8 +16,18 @@
             </div>
         </div>
         <canvas id="gameCanvas"></canvas>
+
+        <!-- Touch Controls for Mobile/Tablet -->
+        <div class="touch-controls" id="touchControls" style="display: none;">
+            <div class="touch-buttons">
+                <button class="touch-btn" id="leftBtn">◀</button>
+                <button class="touch-btn shoot-btn" id="shootBtn">🚀</button>
+                <button class="touch-btn" id="rightBtn">▶</button>
+            </div>
+        </div>
+
         <div class="controls">
-            <p>← → Arrow Keys to Move | Space to Shoot</p>
+            <p id="controlsText">← → Arrow Keys to Move | Space to Shoot</p>
             <button id="startBtn">Start Game</button>
             <button id="restartBtn" style="display: none;">Restart Game</button>
         </div>

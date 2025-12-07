@@ -383,6 +383,76 @@ document.addEventListener('keyup', (e) => {
     }
 });
 
+// Touch Controls for Mobile/Tablet
+const touchControls = document.getElementById('touchControls');
+const leftBtn = document.getElementById('leftBtn');
+const rightBtn = document.getElementById('rightBtn');
+const shootBtn = document.getElementById('shootBtn');
+const controlsText = document.getElementById('controlsText');
+
+// Detect if device supports touch
+function isTouchDevice() {
+    return (('ontouchstart' in window) ||
+        (navigator.maxTouchPoints > 0) ||
+        (navigator.msMaxTouchPoints > 0));
+}
+
+// Show touch controls on touch devices
+if (isTouchDevice()) {
+    touchControls.style.display = 'block';
+    controlsText.textContent = 'Use buttons below to play';
+}
+
+// Left button controls
+function handleLeftStart(e) {
+    e.preventDefault();
+    if (!gameRunning) return;
+    keys.touch_left = true;
+    player.dx = -player.speed;
+}
+
+function handleLeftEnd(e) {
+    e.preventDefault();
+    keys.touch_left = false;
+    if (!keys.touch_right && !keys.right && !keys.left) player.dx = 0;
+}
+
+leftBtn.addEventListener('touchstart', handleLeftStart);
+leftBtn.addEventListener('mousedown', handleLeftStart);
+leftBtn.addEventListener('touchend', handleLeftEnd);
+leftBtn.addEventListener('mouseup', handleLeftEnd);
+leftBtn.addEventListener('touchcancel', handleLeftEnd);
+
+// Right button controls
+function handleRightStart(e) {
+    e.preventDefault();
+    if (!gameRunning) return;
+    keys.touch_right = true;
+    player.dx = player.speed;
+}
+
+function handleRightEnd(e) {
+    e.preventDefault();
+    keys.touch_right = false;
+    if (!keys.touch_left && !keys.left && !keys.right) player.dx = 0;
+}
+
+rightBtn.addEventListener('touchstart', handleRightStart);
+rightBtn.addEventListener('mousedown', handleRightStart);
+rightBtn.addEventListener('touchend', handleRightEnd);
+rightBtn.addEventListener('mouseup', handleRightEnd);
+rightBtn.addEventListener('touchcancel', handleRightEnd);
+
+// Shoot button controls
+function handleShoot(e) {
+    e.preventDefault();
+    if (!gameRunning) return;
+    shoot();
+}
+
+shootBtn.addEventListener('touchstart', handleShoot);
+shootBtn.addEventListener('mousedown', handleShoot);
+
 // Initial draw
 clear();
 drawPlayer();
