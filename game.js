@@ -9,6 +9,7 @@ let gameRunning = false;
 let score = 0;
 let lives = 3;
 let gameLoop;
+let enemiesCanShoot = true;
 
 // Player
 const player = {
@@ -209,7 +210,7 @@ function updateEnemies() {
     }
 
     // Random enemy shooting
-    if (Math.random() < 0.01 && enemies.some(e => e.alive)) {
+    if (enemiesCanShoot && Math.random() < 0.01 && enemies.some(e => e.alive)) {
         const aliveEnemies = enemies.filter(e => e.alive);
         const shooter = aliveEnemies[Math.floor(Math.random() * aliveEnemies.length)];
         enemyBullets.push({
@@ -356,6 +357,20 @@ function restartGame() {
 // Event listeners
 document.getElementById('startBtn').addEventListener('click', startGame);
 document.getElementById('restartBtn').addEventListener('click', restartGame);
+
+// Enemy shooting toggle
+const enemyShootToggle = document.getElementById('enemyShootToggle');
+enemyShootToggle.addEventListener('click', () => {
+    enemiesCanShoot = !enemiesCanShoot;
+
+    if (enemiesCanShoot) {
+        enemyShootToggle.classList.add('active');
+        enemyShootToggle.textContent = '👾 Enemies Can Shoot';
+    } else {
+        enemyShootToggle.classList.remove('active');
+        enemyShootToggle.textContent = '👾 Enemies Cannot Shoot';
+    }
+});
 
 // Keyboard controls
 document.addEventListener('keydown', (e) => {

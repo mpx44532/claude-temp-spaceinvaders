@@ -50,6 +50,42 @@ h1 {
     border-radius: 5px;
 }
 
+.game-settings {
+    margin-top: 15px;
+}
+
+.toggle-btn {
+    font-family: 'Courier New', monospace;
+    font-size: 1em;
+    padding: 10px 20px;
+    background: rgba(255, 0, 0, 0.2);
+    color: #ff0000;
+    border: 2px solid #ff0000;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+.toggle-btn.active {
+    background: rgba(0, 255, 0, 0.2);
+    color: #00ff00;
+    border-color: #00ff00;
+}
+
+.toggle-btn:hover {
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    transform: scale(1.05);
+}
+
+.toggle-btn.active:hover {
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+}
+
+.toggle-btn:not(.active):hover {
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+}
+
 #gameCanvas {
     display: block;
     margin: 0 auto;
