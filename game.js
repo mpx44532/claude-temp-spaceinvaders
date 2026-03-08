@@ -25,34 +25,37 @@ let lives = 3;
 let gameLoop;
 let enemiesCanShoot = true;
 
-// Player
+// Scaling factor based on canvas size
+const scale = canvas.width / 800;
+
+// Player (scales with canvas)
 const player = {
-    x: canvas.width / 2 - 25,
-    y: canvas.height - 60,
-    width: 50,
-    height: 30,
-    speed: 5,
+    x: canvas.width / 2 - (25 * scale),
+    y: canvas.height - (60 * scale),
+    width: 50 * scale,
+    height: 30 * scale,
+    speed: 5 * scale,
     dx: 0
 };
 
 // Bullets
 let playerBullets = [];
 let enemyBullets = [];
-const bulletSpeed = 7;
-const enemyBulletSpeed = 3;
+const bulletSpeed = 7 * scale;
+const enemyBulletSpeed = 3 * scale;
 
-// Enemies
+// Enemies (all dimensions scale with canvas)
 let enemies = [];
 const enemyRows = 5;
 const enemyCols = 11;
-const enemyWidth = 40;
-const enemyHeight = 30;
-const enemyPadding = 10;
-const enemyOffsetTop = 50;
-const enemyOffsetLeft = 50;
-let enemySpeed = 1;
+const enemyWidth = 40 * scale;
+const enemyHeight = 30 * scale;
+const enemyPadding = 10 * scale;
+const enemyOffsetTop = 50 * scale;
+const enemyOffsetLeft = 50 * scale;
+let enemySpeed = 1 * scale;
 let enemyDirection = 1;
-let enemyDropDistance = 20;
+let enemyDropDistance = 20 * scale;
 
 // Controls
 let keys = {};
@@ -62,10 +65,11 @@ function init() {
     createEnemies();
     score = 0;
     lives = 3;
-    player.x = canvas.width / 2 - 25;
+    player.x = canvas.width / 2 - (25 * scale);
+    player.y = canvas.height - (60 * scale);
     playerBullets = [];
     enemyBullets = [];
-    enemySpeed = 1;
+    enemySpeed = 1 * scale;
     updateScore();
     updateLives();
 }
@@ -99,7 +103,7 @@ function drawPlayer() {
 
     // Draw cockpit
     ctx.fillStyle = '#00ffff';
-    ctx.fillRect(player.x + player.width / 2 - 5, player.y + 10, 10, 10);
+    ctx.fillRect(player.x + player.width / 2 - (5 * scale), player.y + (10 * scale), 10 * scale, 10 * scale);
 }
 
 // Draw enemies
@@ -115,17 +119,17 @@ function drawEnemies() {
 
             // Draw eyes
             ctx.fillStyle = '#fff';
-            ctx.fillRect(enemy.x + 8, enemy.y + 8, 8, 8);
-            ctx.fillRect(enemy.x + 24, enemy.y + 8, 8, 8);
+            ctx.fillRect(enemy.x + (8 * scale), enemy.y + (8 * scale), 8 * scale, 8 * scale);
+            ctx.fillRect(enemy.x + (24 * scale), enemy.y + (8 * scale), 8 * scale, 8 * scale);
 
             // Draw antennae
             ctx.strokeStyle = colors[enemy.type];
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 3 * scale;
             ctx.beginPath();
-            ctx.moveTo(enemy.x + 10, enemy.y);
-            ctx.lineTo(enemy.x + 5, enemy.y - 8);
-            ctx.moveTo(enemy.x + 30, enemy.y);
-            ctx.lineTo(enemy.x + 35, enemy.y - 8);
+            ctx.moveTo(enemy.x + (10 * scale), enemy.y);
+            ctx.lineTo(enemy.x + (5 * scale), enemy.y - (8 * scale));
+            ctx.moveTo(enemy.x + (30 * scale), enemy.y);
+            ctx.lineTo(enemy.x + (35 * scale), enemy.y - (8 * scale));
             ctx.stroke();
         }
     });
@@ -137,25 +141,25 @@ function drawBullets() {
     playerBullets.forEach(bullet => {
         // Outer glow
         ctx.beginPath();
-        ctx.arc(bullet.x, bullet.y, 8, 0, Math.PI * 2);
+        ctx.arc(bullet.x, bullet.y, 8 * scale, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(138, 43, 226, 0.3)';
         ctx.fill();
 
         // Middle layer
         ctx.beginPath();
-        ctx.arc(bullet.x, bullet.y, 6, 0, Math.PI * 2);
+        ctx.arc(bullet.x, bullet.y, 6 * scale, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(147, 112, 219, 0.7)';
         ctx.fill();
 
         // Core - violet
         ctx.beginPath();
-        ctx.arc(bullet.x, bullet.y, 4, 0, Math.PI * 2);
+        ctx.arc(bullet.x, bullet.y, 4 * scale, 0, Math.PI * 2);
         ctx.fillStyle = '#9370DB';
         ctx.fill();
 
         // Highlight for snowball effect
         ctx.beginPath();
-        ctx.arc(bullet.x - 1, bullet.y - 1, 2, 0, Math.PI * 2);
+        ctx.arc(bullet.x - (1 * scale), bullet.y - (1 * scale), 2 * scale, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(230, 230, 250, 0.8)';
         ctx.fill();
     });
@@ -164,13 +168,13 @@ function drawBullets() {
     enemyBullets.forEach(bullet => {
         // Outer glow
         ctx.beginPath();
-        ctx.arc(bullet.x, bullet.y, 6, 0, Math.PI * 2);
+        ctx.arc(bullet.x, bullet.y, 6 * scale, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(255, 0, 0, 0.4)';
         ctx.fill();
 
         // Core
         ctx.beginPath();
-        ctx.arc(bullet.x, bullet.y, 4, 0, Math.PI * 2);
+        ctx.arc(bullet.x, bullet.y, 4 * scale, 0, Math.PI * 2);
         ctx.fillStyle = '#ff0000';
         ctx.fill();
     });
@@ -236,7 +240,7 @@ function updateEnemies() {
 
 // Collision detection
 function checkCollisions() {
-    const bulletRadius = 4;
+    const bulletRadius = 4 * scale;
 
     // Player bullets hit enemies
     playerBullets.forEach((bullet, bulletIndex) => {
@@ -254,7 +258,7 @@ function checkCollisions() {
 
                 // Increase difficulty
                 if (enemies.filter(e => e.alive).length % 10 === 0) {
-                    enemySpeed += 0.2;
+                    enemySpeed += 0.2 * scale;
                 }
             }
         });
@@ -323,7 +327,7 @@ function gameOver() {
 // Next level
 function nextLevel() {
     createEnemies();
-    enemySpeed += 0.5;
+    enemySpeed += 0.5 * scale;
     score += 100;
     updateScore();
 }
