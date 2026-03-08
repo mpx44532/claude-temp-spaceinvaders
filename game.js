@@ -1,8 +1,22 @@
 // Canvas setup
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-canvas.width = 800;
-canvas.height = 600;
+
+// Responsive canvas sizing
+function initCanvas() {
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+        // Scale canvas to fit mobile screen while maintaining 4:3 aspect ratio
+        const maxWidth = Math.min(window.innerWidth - 40, 800);
+        canvas.width = maxWidth;
+        canvas.height = maxWidth * 0.75; // 4:3 aspect ratio
+    } else {
+        canvas.width = 800;
+        canvas.height = 600;
+    }
+}
+
+initCanvas();
 
 // Game state
 let gameRunning = false;

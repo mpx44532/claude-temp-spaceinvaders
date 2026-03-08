@@ -206,16 +206,48 @@ button:active {
 }
 
 @media (max-width: 768px) {
+    body {
+        overflow-y: auto;
+    }
+
+    .game-container {
+        padding: 10px;
+        width: 100%;
+        max-width: 100%;
+    }
+
     h1 {
-        font-size: 1.8em;
+        font-size: 1.5em;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
     }
 
     .game-info {
-        font-size: 1em;
+        font-size: 0.9em;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .score, .lives {
+        padding: 8px 15px;
+    }
+
+    .toggle-btn {
+        font-size: 0.85em;
+        padding: 8px 15px;
     }
 
     #gameCanvas {
         max-width: 100%;
         height: auto;
+    }
+
+    .controls p {
+        font-size: 0.9em;
+    }
+
+    button {
+        font-size: 1em;
+        padding: 10px 20px;
     }
 }
